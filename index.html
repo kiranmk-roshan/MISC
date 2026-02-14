@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine ❤️</title>
+
+<style>
+  body {
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  /* 🔁 Slideshow background */
+  .bg-slideshow {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    animation: slideshow 18s infinite;
+  }
+
+  /* 🌑 Dark overlay */
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  @keyframes slideshow {
+    0%   { background-image: url("img1.jpg"); }
+    33%  { background-image: url("img2.jpg"); }
+    66%  { background-image: url("img3.jpg"); }
+    100% { background-image: url("img1.jpg"); }
+  }
+
+  /* 💌 Card */
+  .card {
+    background: light blue;
+    padding: 45px 55px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    z-index: 10;
+  }
+
+  h1 {
+    color: #ff4081;
+    margin-bottom: 30px;
+  }
+
+  .buttons {
+    position: relative;
+    height: 90px;
+  }
+
+  button {
+    padding: 14px 32px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+
+  #yesBtn {
+    background: #4caf50;
+    color: white;
+    margin-right: 25px;
+    transition: transform 0.2s;
+  }
+
+  #yesBtn:hover {
+    transform: scale(1.15);
+  }
+
+  #noBtn {
+    background: #f44336;
+    color: white;
+    position: absolute;
+  }
+
+  #finalMsg {
+    display: none;
+    font-size: 26px;
+    color: #ff4081;
+    margin-top: 25px;
+  }
+
+  /* ❤️ Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 22px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Background -->
+<div class="bg-slideshow"></div>
+<div class="bg-overlay"></div>
+
+<!-- 💝 Main Card -->
+<div class="card">
+  <!-- ✏️ CHANGE NAME HERE -->
+  <h1>Will you be my Valentine, ❤️DUDI❤️?</h1>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😜</button>
+  </div>
+
+  <div id="finalMsg">
+    💕 Yappi wala love-day DUDI-LOVE 💕 😘  
+  </div>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const finalMsg = document.getElementById("finalMsg");
+  const music = document.getElementById("bgMusic");
+
+  let speedMultiplier = 1;
+
+  // 😈 Runaway NO button
+  noBtn.addEventListener("mouseenter", () => {
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX * speedMultiplier;
+    const y = Math.random() * maxY * speedMultiplier;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    speedMultiplier += 0.15;
+  });
+
+  // 💖 YES clicked
+  yesBtn.addEventListener("click", () => {
+    finalMsg.style.display = "block";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+
+    music.play();
+    startHearts();
+    confettiBurst();
+  });
+
+  // ❤️ Floating hearts
+  function startHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+  }
+
+  // 🎉 Confetti
+  function confettiBurst() {
+    for (let i = 0; i < 60; i++) {
+      const conf = document.createElement("div");
+      conf.innerHTML = "💖";
+      conf.style.position = "fixed";
+      conf.style.left = Math.random() * 100 + "vw";
+      conf.style.top = Math.random() * 100 + "vh";
+      conf.style.fontSize = "22px";
+      conf.style.animation = "floatUp 3s linear";
+      document.body.appendChild(conf);
+
+      setTimeout(() => conf.remove(), 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
